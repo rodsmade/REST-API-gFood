@@ -1,4 +1,4 @@
-package org.generation.brazil.gfood.security_config;
+package org.generation.brazil.gfood.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

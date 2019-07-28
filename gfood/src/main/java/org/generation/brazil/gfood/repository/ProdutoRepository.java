@@ -1,5 +1,6 @@
-package org.generation.brazil.gfood.produto;
+package org.generation.brazil.gfood.repository;
 
+import org.generation.brazil.gfood.model.Produto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

@@ -1,4 +1,4 @@
-package org.generation.brazil.gfood.produto;
+package org.generation.brazil.gfood.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

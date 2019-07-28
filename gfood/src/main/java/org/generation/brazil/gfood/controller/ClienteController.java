@@ -1,5 +1,7 @@
-package org.generation.brazil.gfood.cliente;
+package org.generation.brazil.gfood.controller;
 
+import org.generation.brazil.gfood.model.Cliente;
+import org.generation.brazil.gfood.repository.ClienteRepository;
 import org.generation.brazil.gfood.exception.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package org.generation.brazil.gfood.usuario;
+package org.generation.brazil.gfood.controller;
 
 import java.util.List;
 import java.util.Optional;
@@ -7,6 +7,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.generation.brazil.gfood.exception.ResourceNotFoundException;
+import org.generation.brazil.gfood.model.Usuario;
+import org.generation.brazil.gfood.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;

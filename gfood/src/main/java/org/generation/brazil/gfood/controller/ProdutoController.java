@@ -1,18 +1,18 @@
-package org.generation.brazil.gfood.produto;
+package org.generation.brazil.gfood.controller;
 
 import org.generation.brazil.gfood.exception.ResourceNotFoundException;
-import org.generation.brazil.gfood.produto.Produto;
-import org.generation.brazil.gfood.produto.ProdutoRepository;
+import org.generation.brazil.gfood.model.Produto;
+import org.generation.brazil.gfood.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/produtos")
+@RequestMapping("/api/v1.0/produtos")
 public class ProdutoController {
 
   @Autowired
@@ -31,7 +31,7 @@ public class ProdutoController {
   // INSERIR NOVO REGISTRO
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping("")
-  public Produto save(@RequestBody Produto produto) {
+  public Produto criarNovoProduto(@RequestBody Produto produto) {
     return repository.save(produto);
   }
 
@@ -47,7 +47,7 @@ public class ProdutoController {
 
   // BUSCAR UM REGISTRO PELO ID
   @GetMapping("/{id}")
-  public Produto encontrarPorId(@PathVariable("id") Long id) {
+  public Produto buscarPorId(@PathVariable("id") Long id) {
     return repository.findById(id).get();
   }
 
@@ -57,22 +57,28 @@ public class ProdutoController {
     return repository.findByNome(nome);
   }
 
+  @GetMapping("/filter/preco/less-than") // ?preco=10.00
+  public List<Produto> buscarPorPrecoMenorQue(@RequestParam BigDecimal preco) {
+    return repository.findByPrecoLessThan(preco);
+  }
 
+  @GetMapping("/filter/preco/greater-than") // ?preco=10.00
+  public List<Produto> buscarPorPrecoMaiorQue(@RequestParam BigDecimal preco) {
+    return repository.findByPrecoGreaterThan(preco);
+  }
+
+  @GetMapping("/filter/between") // ?minimo=10.00&maximo=20.00
+  public List<Produto> buscarPorPrecoEntre(@RequestParam BigDecimal minimo, BigDecimal maximo) {
+    return repository.findByPrecoBetween(minimo, maximo);
+  }
 
   //      (   U   )                                                MÉTODOS DE UPDATE
 
   // ATUALIZAR REGISTRO PELO ID
-  @PutMapping("/{id}")
-  public Produto update(@PathVariable("id") Long id, @RequestBody Produto produto)
-      throws ResourceNotFoundException {
-    return repository.findById(id).map(produtttt -> {
-      produtttt.setNome(produto.getNome());
-      produtttt.setDescricao(produto.getDescricao());
-      produtttt.setPreco(produto.getPreco());
-      return repository.save(produtttt);
-
-    }).orElseThrow(() -> new ResourceNotFoundException(
-        "Não existe produto cadastrado com o id_produto: " + id));
+  @PatchMapping("/atualizar/{id}")
+  public Optional<Produto> atualizarPrecoPorId(@PathVariable Long id, @RequestParam BigDecimal preco) {
+    repository.updatePrecoById(preco, id);
+    return repository.findById(id);
   }
 
 
@@ -81,12 +87,12 @@ public class ProdutoController {
 
   // DELETAR REGISTRO PELO ID
   @DeleteMapping("/{id}")
-  public void delete(@PathVariable("id") Long id) {
+  public void deletarPorId(@PathVariable("id") Long id) {
     repository.deleteById(id);
   }
 
   @DeleteMapping("/delete-by")
-  public void deleteByPrecoLessThan(@RequestParam BigDecimal preco) {
+  public void deletarPorPrecoMenorQue(@RequestParam BigDecimal preco) {
     // "DELETE FROM produto WHERE preco < ..."
     repository.deleteByPrecoLessThan(preco);
   }

@@ -1,4 +1,4 @@
-package org.generation.brazil.gfood.usuario;
+package org.generation.brazil.gfood.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;

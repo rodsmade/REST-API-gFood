@@ -1,6 +1,6 @@
-package org.generation.brazil.gfood.cliente;
+package org.generation.brazil.gfood.repository;
 
-import jdk.vm.ci.meta.Local;
+import org.generation.brazil.gfood.model.Cliente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
